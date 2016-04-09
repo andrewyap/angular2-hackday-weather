@@ -20,6 +20,6 @@ import {HTTP_PROVIDERS}    from 'angular2/http';
   { path: '/',      name: 'Home',  component: HomeComponent  },
   { path: '/about', name: 'About', component: AboutComponent },
   { path: '/weather', name: 'Weather', component: WeatherComponent },
-  { path: '/weather/:city', name: 'WeatherDetail', component: WeatherDetailComponent }
+  { path: '/weatherdetail', name: 'WeatherDetail', component: WeatherDetailComponent }
 ])
 export class AppComponent {}

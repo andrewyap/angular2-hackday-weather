@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import {Http, Headers, RequestOptions} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
 
-const _weatherAPIUrl = 'http://globalmapweather.azurewebsites.net:80/api/Weather';
+const _weatherAPIUrl = 'http://globalmapweather.azurewebsites.net/api/Weather';
 
 @Injectable()
 export class WeatherService {
@@ -15,7 +15,10 @@ export class WeatherService {
 
     getLocations() : Observable<Location[]> {
         return this.http.get(_weatherAPIUrl)
-            .map(res => this.locations = <Location[]> res.json().data)
+            .map(res => {
+                this.locations = <Location[]> res.json();
+                return <Location[]> res.json();
+            })
             .catch(err => Observable.throw(err.json().error || 'Unable to get data'));
     }
 
@@ -40,11 +43,11 @@ export class WeatherService {
             .catch(err => Observable.throw(err.json().error || 'Unable to post data'));
     }
 
-    removeLastLocation() : Observable<boolean> {
+    removeAllLocations() : Observable<Location[]> {
         return this.http.delete(_weatherAPIUrl)
             .map(res => {
-                this.locations.pop();
-                return Observable.create(true);
+                this.locations = [];
+                return Observable.create(this.locations);
             })
             .catch(err => Observable.throw(err.json().error || 'Unable to delete data'));
     }

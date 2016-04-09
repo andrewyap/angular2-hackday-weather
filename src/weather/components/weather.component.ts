@@ -1,28 +1,50 @@
-import {Component} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {Router}    from 'angular2/router';
+import {WeatherService, Location}      from './weather.data.service';
 
 @Component({
   selector: 'sd-weather',
   templateUrl: './weather/components/weather.component.html',
-  styleUrls: ['./weather/components/weather.component.css']
+  styleUrls: ['./weather/components/weather.component.css'],
+  providers: [WeatherService]
 })
 export class WeatherComponent {
 	data: any[];
+	locations: Location[];
+	errorMessage: string;
 
 	constructor(
-		private _router: Router
-	) {
-		this.data = Data;
-	};
+		private _router: Router,
+		private _weatherService: WeatherService
+	) {};
+
+	ngOnInit() { this.getLocations(); }
+
+	getLocations() {
+		this._weatherService.getLocations().subscribe(
+			locations => {
+				this.locations = locations;
+				console.log(this.locations);
+			},
+			error => this.errorMessage = <any>error
+		);
+	}
 
 	onSelect(city: string): boolean {
 		alert(city);
-		this._router.navigate( ['WeatherDetail', { city: city }] );
+		this._router.navigate( ['WeatherDetail'] );
 		return;
 	};
 
-	constructor() {
-		// this.data = JSON.stringify(Data);
+	removeAllLocations(): boolean {
+		this._weatherService.removeAllLocations().subscribe(
+			locations => {
+				this.locations = locations;
+				console.log(this.locations);
+			},
+			error => this.errorMessage = <any>error
+		);
+		return;
 	}
 
 }

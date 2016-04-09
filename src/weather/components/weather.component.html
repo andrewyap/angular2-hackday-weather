@@ -2,15 +2,18 @@
 	Hi there!
 
 	<ul>
-		<div *ngFor="#location of data">
+		<div *ngFor="#location of locations">
 			<li>
 				<a (click)="onSelect(location.City)">{{location.City}}</a>
 			</li>
 		</div>
 		
-		<h2>City details</h2>
+<!-- 		<h2>City details</h2>
 		<li>
-			<!-- <a [routerLink]="['CityDetails']">{{location.City}}</a> -->
-		</li>
+			
+			<a [routerLink]="['CityDetails']">{{location.City}}</a>
+		</li> -->
 	</ul>
+
+	<button (click)="removeAllLocations()">Remove all locations</button>
 </h1>
