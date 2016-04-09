@@ -1,19 +1,16 @@
 import {Injectable} from 'angular2/core';
 import * as _ from 'lodash';
-import {HTTP_PROVIDERS} from 'angular2/http';
+import {Http, Response} from 'angular2/http';
+import {Observable}     from 'rxjs/Observable';
+
+const _weatherAPIUrl = 'http://globalmapweather.azurewebsites.net:80/api/Weather';
 
 @Injectable()
 export class WeatherService {
     locations: Location[];
 
-    constructor() {
-        this.locations = [
-            new Location('Sydney', 21, 151.2313, -33.91741, 68),
-            new Location('Brisbane', 22, 153.0186, -27.91741, 56),
-            new Location('Melbourne', 23, 144.9322, -37.2387, 67),
-            new Location('Leuven', 5, 4.700232, 50.23829, 40),
-            new Location('China', 33, 116.2382, 39.90232, 30)
-        ];
+    constructor(private http: Http) {
+        this.locations = [];
     }
 
     getLocations() : any[] {
@@ -27,7 +24,7 @@ export class WeatherService {
         return result;
     }
 
-    getLocation(city: string) {
+    getLocation(city: string) : Location {
         return _(this.locations).find({ City: city });
     }
 
