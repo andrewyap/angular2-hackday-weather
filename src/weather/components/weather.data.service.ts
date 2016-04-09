@@ -1,6 +1,6 @@
 import {Injectable} from 'angular2/core';
 import * as _ from 'lodash';
-import {Http, Response} from 'angular2/http';
+import {Http, Headers, RequestOptions} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
 
 const _weatherAPIUrl = 'http://globalmapweather.azurewebsites.net:80/api/Weather';
@@ -13,38 +13,40 @@ export class WeatherService {
         this.locations = [];
     }
 
-    getLocations() : any[] {
-        let result = this.locations.map(data => {
-            return {
-                city: data.City,
-                temperature: data.Temperature
-            };
-        });
-
-        return result;
+    getLocations() : Observable<Location[]> {
+        return this.http.get(_weatherAPIUrl)
+            .map(res => this.locations = <Location[]> res.json().data)
+            .catch(err => Observable.throw(err.json().error || 'Unable to get data'));
     }
 
-    getLocation(city: string) : Location {
-        return _(this.locations).find({ City: city });
+    getLocation(city: string) : Observable<Location> {
+        let location = _(this.locations).find({ City: city });
+        return Observable.create(location);
     }
 
-    addLocation(location: Location) {
+    addLocation(location: Location) : Observable<boolean> {
         if (_(this.locations).find({ City: location.City }))
-            return false;
+            return Observable.create(false);
 
-        this.locations.push(location);
-        return true;
+        let body = JSON.stringify(location);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(_weatherAPIUrl, body, options)
+            .map(res => {
+                this.locations.push(location);
+                return Observable.create(true);
+            })
+            .catch(err => Observable.throw(err.json().error || 'Unable to post data'));
     }
 
-    removeLocation(city: string) {
-        if (_(this.locations).find({ City: city })) {
-            _(this.locations).remove((location : Location) => {
-                return location.City === city;
-            });
-            return true;
-        }
-
-        return false;
+    removeLastLocation() : Observable<boolean> {
+        return this.http.delete(_weatherAPIUrl)
+            .map(res => {
+                this.locations.pop();
+                return Observable.create(true);
+            })
+            .catch(err => Observable.throw(err.json().error || 'Unable to delete data'));
     }
 }
 
