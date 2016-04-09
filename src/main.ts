@@ -10,6 +10,7 @@ bootstrap(AppComponent, [
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' })
 ]);
 
+
 // In order to start the Service Worker located at "./sw.js"
 // uncomment this line. More about Service Workers here
 // https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
