@@ -10,7 +10,7 @@ export class WeatherService {
         this.mockData = mockData;
     }
 
-    getCountries() : any[] {
+    getLocations() : any[] {
         let result = mockData.map(data => {
             return {
                 city: data.City,
@@ -21,8 +21,27 @@ export class WeatherService {
         return result;
     }
 
-    getCountry(city: string) {
-        // return _(mockData).find({ City: city});
+    getLocation(city: string) {
+        return _(this.mockData).find({ City: city });
+    }
+
+    addLocation(location: Location) {
+        if (_(this.mockData).find({ City: location.City }))
+            return false;
+
+        this.mockData.push(location);
+        return true;
+    }
+
+    removeLocation(city: string) {
+        if (_(this.mockData).find({ City: city })) {
+            _(this.mockData).remove((location : Location) => {
+                return location.City === city;
+            });
+            return true;
+        }
+
+        return false;
     }
 }
 
