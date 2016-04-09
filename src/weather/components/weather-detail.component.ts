@@ -4,25 +4,31 @@ import {WeatherService, Location}      from './weather.data.service';
 
 @Component({
 	selector: 'sd-weather-detail',
-	templateUrl: './weather-detail.component.html',
-	styleUrls: ['./weather-detail.component.css'],
+	templateUrl: './weather/components/weather-detail.component.html',
+	styleUrls: ['./weather/components/weather-detail.component.css'],
 	providers: [WeatherService]
 })
 
 export class WeatherDetailComponent implements OnInit {
+	city: string;
 	data: any[];
-	// cityData: Location;
+	cityData: any;
+	errorMessage: string;
 
 	constructor(
 		private _router: Router,
 		private _routeParams: RouteParams
-		// private _weatherService: WeatherService
-	) {
-		// this.cityData = _weatherService.getLocation(city);
-	}
+		private _weatherService: WeatherService
+	) {}
 
 	ngOnInit() {
 		let city = this._routeParams.get('city');
-		// this.cityData = this._weatherService.getLocation(city);
+		this._weatherService.getLocation(city).subscribe(
+			data => {
+				this.cityData = data;
+				console.log(this.cityData);
+			},
+			error => this.errorMessage = <any>error
+		);
 	}
 };

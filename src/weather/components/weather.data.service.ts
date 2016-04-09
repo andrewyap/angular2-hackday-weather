@@ -23,8 +23,12 @@ export class WeatherService {
     }
 
     getLocation(city: string) : Observable<Location> {
-        let location = _(this.locations).find({ City: city });
-        return Observable.create(location);
+        return this.http.get(_weatherAPIUrl)
+            .map(res => {
+                this.locations = <Location[]> res.json();
+                let location = _(this.locations).find({ City: city });
+                return location; 
+            })
     }
 
     addLocation(location: Location) : Observable<boolean> {

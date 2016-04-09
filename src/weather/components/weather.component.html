@@ -5,6 +5,7 @@
 		<div *ngFor="#location of locations">
 			<li>
 				<a (click)="onSelect(location.City)">{{location.City}}</a>
+				<!-- <a [routerLink]="['WeatherDetail']">{{location.City}}</a> -->
 			</li>
 		</div>
 		

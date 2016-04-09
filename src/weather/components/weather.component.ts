@@ -1,12 +1,13 @@
 import {Component, OnInit} from 'angular2/core';
-import {Router}    from 'angular2/router';
+import {Router, ROUTER_DIRECTIVES}    from 'angular2/router';
 import {WeatherService, Location}      from './weather.data.service';
 
 @Component({
   selector: 'sd-weather',
   templateUrl: './weather/components/weather.component.html',
   styleUrls: ['./weather/components/weather.component.css'],
-  providers: [WeatherService]
+  providers: [WeatherService],
+  directives: [ROUTER_DIRECTIVES]
 })
 export class WeatherComponent {
 	data: any[];
@@ -32,7 +33,7 @@ export class WeatherComponent {
 
 	onSelect(city: string): boolean {
 		alert(city);
-		this._router.navigate( ['WeatherDetail'] );
+		this._router.navigate( ['WeatherDetail', {city: city}] );
 		return;
 	};
 
