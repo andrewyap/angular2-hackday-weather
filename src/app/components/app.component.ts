@@ -5,6 +5,7 @@ import {ToolbarComponent} from './toolbar.component';
 import {HomeComponent} from '../../home/components/home.component';
 import {AboutComponent} from '../../about/components/about.component';
 import {WeatherComponent} from '../../weather/components/weather.component';
+import {WeatherDetailComponent} from '../../weather/components/weather-detail.component';
 import {NameListService} from '../../shared/services/name-list.service';
 import {HTTP_PROVIDERS}    from 'angular2/http';
 
@@ -18,6 +19,7 @@ import {HTTP_PROVIDERS}    from 'angular2/http';
 @RouteConfig([
   { path: '/',      name: 'Home',  component: HomeComponent  },
   { path: '/about', name: 'About', component: AboutComponent },
-  { path: '/weather', name: 'Weather', component: WeatherComponent }
+  { path: '/weather', name: 'Weather', component: WeatherComponent },
+  { path: '/weather/:city', name: 'WeatherDetail', component: WeatherDetailComponent }
 ])
 export class AppComponent {}

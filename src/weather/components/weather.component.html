@@ -1,5 +1,16 @@
 <h1>
 	Hi there!
 
-	{{ data }}
+	<ul>
+		<div *ngFor="#location of data">
+			<li>
+				<a (click)="onSelect(location.City)">{{location.City}}</a>
+			</li>
+		</div>
+		
+		<h2>City details</h2>
+		<li>
+			<!-- <a [routerLink]="['CityDetails']">{{location.City}}</a> -->
+		</li>
+	</ul>
 </h1>

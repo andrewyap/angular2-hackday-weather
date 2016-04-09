@@ -1,4 +1,5 @@
 import {Component} from 'angular2/core';
+import {Router}    from 'angular2/router';
 
 @Component({
   selector: 'sd-weather',
@@ -6,9 +7,22 @@ import {Component} from 'angular2/core';
   styleUrls: ['./weather/components/weather.component.css']
 })
 export class WeatherComponent {
-	data: string;
+	data: any[];
+
+	constructor(
+		private _router: Router
+	) {
+		this.data = Data;
+	};
+
+	onSelect(city: string): boolean {
+		alert(city);
+		this._router.navigate( ['WeatherDetail', { city: city }] );
+		return;
+	};
 
 	constructor() {
 		// this.data = JSON.stringify(Data);
 	}
+
 }
