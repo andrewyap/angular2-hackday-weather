@@ -1,5 +1,4 @@
 import {Component} from 'angular2/core';
-import Data from './mockweatherdata';
 
 @Component({
   selector: 'sd-weather',
@@ -10,6 +9,6 @@ export class WeatherComponent {
 	data: string;
 
 	constructor() {
-		this.data = JSON.stringify(Data);
+		// this.data = JSON.stringify(Data);
 	}
 }
