@@ -1,6 +1,6 @@
 import {Component, OnInit}   from 'angular2/core';
 import {Router, RouteParams} from 'angular2/router';
-import {WeatherService, Location}      from './weather.data.service';
+import {WeatherService, Location} from './weather.data.service';
 
 @Component({
 	selector: 'sd-weather-detail',
@@ -17,7 +17,7 @@ export class WeatherDetailComponent implements OnInit {
 
 	constructor(
 		private _router: Router,
-		private _routeParams: RouteParams
+		private _routeParams: RouteParams,
 		private _weatherService: WeatherService
 	) {}
 
